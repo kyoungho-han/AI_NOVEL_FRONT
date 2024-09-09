@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container p {
+  flex: 0 0 2.33%; 
+  margin-left: 100px;
+  
+}
+
+.genre {
+  display: flex;
+  justify-content: space-evenly;
+  width: 950px;
+  margin: 0 auto;
+}
+

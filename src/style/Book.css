@@ -1,0 +1,14 @@
+.Book img{
+  width: 300px;
+  height: 300px;
+  border-radius: 20px;
+}
+
+.explanation h2{
+  font-size: 25px;
+}
+
+.explanation p{
+  font-size: 20px;
+  font-weight: 500;
+}

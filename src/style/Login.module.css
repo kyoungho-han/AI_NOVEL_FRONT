@@ -1,0 +1,59 @@
+
+
+h1{
+  font-size: 60px;
+  text-align: center;
+}
+
+.formStyle{
+  width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border:4px #537188 solid;
+  border-radius: 30px;
+  padding: 30px 5px;
+}
+
+.username input{
+  font-size: 20px;
+  width: 300px;
+  padding: 10px;
+  margin: 20px 0 ;
+}
+
+.password input{
+  font-size: 20px;
+  width: 300px;
+  padding: 10px;
+  margin: 20px 0 ;
+}
+
+.submitButton{
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+
+.submitButton button{
+  font-size: 20px;
+  font-weight: bold;
+  width: 300px;
+  padding: 10px;
+  margin: 20px 0;
+  color: white;
+  background-color: #537188;
+  border: none;
+  cursor: pointer;
+}
+
+.submitButton .linkButton{
+  text-align: center;
+  font-size: 15px;
+  width: 250px;
+  padding: 10px;
+ 
+
+}
+

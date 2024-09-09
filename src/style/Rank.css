@@ -1,0 +1,8 @@
+.rank h2{
+  text-align: center;
+}
+.rank p{
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: 15px;
+}

@@ -1,0 +1,58 @@
+/* ChapterListPage.module.css */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #E0FFFF;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1400px;
+  margin: 20px auto;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img2 img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chapter {
+  margin-top: 20px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.bookCover {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Modals.css */
+
+.resultImg {
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  margin: 5px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.resultImg:hover {
+  transform: scale(1.05);
+}

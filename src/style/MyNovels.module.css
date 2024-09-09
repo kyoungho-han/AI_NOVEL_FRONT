@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1400px;
+  margin: 20px auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header h4 {
+  margin: 0;
+}
+
+.btnNew:hover {
+  background-color: #0056b3;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.cardRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.name {
+  text-align: center;
+}
+
+.btnNew {
+  float:right;
+  margin-right: 30px;
+  width:80px;
+  height:40px;
+  border-radius: 20px;
+  background: linear-gradient(125deg, #81ecec, #6c5ce7, #81ecec) left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+}

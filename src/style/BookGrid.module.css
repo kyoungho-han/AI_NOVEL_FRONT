@@ -1,0 +1,29 @@
+.container {
+  width: 1500px;
+  display: grid;
+  grid-template-columns: auto 1fr; /* Image column and details column */
+  grid-gap: 20px; /* Gap between the columns */
+  align-items: center; /* Vertically center items */
+  margin-left: 350px;
+  margin-top: 20px;
+}
+
+.image img {
+  width: 60%;
+  height: auto;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.details h2 {
+  margin: 0;
+}
+
+.details p {
+  margin-top: 10px;
+}
+
+
