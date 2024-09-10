@@ -16,7 +16,7 @@ const CoverModals = ({ show, onClose, onCloseWithImg }) => {
 
   const accessToken = useSelector((state) => state.authToken);
   const configuration = new Configuration({
-    apiKey: "sk-o8z5Ao2cXHpHlYj0KQeDQyfjxQ4CNVKeaen2VF2rFGT3BlbkFJiYcBx5apHIxcIpw77d5xMQhuZTx9q_vCYKRUE28iMA",
+    apiKey: process.env.REACT_APP_DALL_E_API_KEY,
   });
   const openai = new OpenAIApi(configuration);
   const navigate = useNavigate();

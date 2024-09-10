@@ -19,7 +19,7 @@ const NavBarElements = (props) => {
               width="30"
               height="30"              
             />{' '}
-              Genius Nobel Art
+              Dream Page
               </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">

@@ -17,7 +17,7 @@ const Modals = ({ show, onClose, onCloseWithImg }) => {
   const [changePrompt, setChangePrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
   const configuration = new Configuration({
-    apiKey: "sk-o8z5Ao2cXHpHlYj0KQeDQyfjxQ4CNVKeaen2VF2rFGT3BlbkFJiYcBx5apHIxcIpw77d5xMQhuZTx9q_vCYKRUE28iMA",
+    apiKey: process.env.REACT_APP_DALL_E_API_KEY,
   });
 
   const openai = new OpenAIApi(configuration);
