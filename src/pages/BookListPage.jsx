@@ -51,7 +51,7 @@ const BookListPage = () => {
     (currentPage - 1) * postsPerPage,
     currentPage * postsPerPage
   );
-
+  console.log(currentPosts)
   const handleTitleClick = async(novelId) => {
     navigate(`/detail/${novelId}`)
   }

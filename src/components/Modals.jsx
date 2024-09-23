@@ -22,7 +22,7 @@ const Modals = ({ show, onClose, onCloseWithImg }) => {
 
   const openai = new OpenAIApi(configuration);
 
-  const translateAndGenerateImages = async () => {
+  const handleCreateImages = async () => {
     try {
       setIsLoading(true); // 로딩 시작
 
@@ -43,6 +43,7 @@ const Modals = ({ show, onClose, onCloseWithImg }) => {
       setIsLoading(false); // 로딩 종료
     }
   };
+
   const handleImageClick = (image) => {
     onCloseWithImg(image);
   };
@@ -51,13 +52,19 @@ const Modals = ({ show, onClose, onCloseWithImg }) => {
     onClose();
   };
 
+  // 엔터 입력 시 새로고침 방지하고 완료 버튼 동작 수행
+  const handleFormSubmit = (e) => {
+    e.preventDefault(); // 기본 폼 제출 방지
+    handleCreateImages(); // 완료 버튼 동작 실행
+  };
+
   return (
       <Modal show={show} onHide={onClose}>
         <Modal.Header closeButton>
           <Modal.Title>그림 선택하기</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleFormSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>문장을 입력해주세요.</Form.Label>
               <Form.Control
@@ -67,7 +74,7 @@ const Modals = ({ show, onClose, onCloseWithImg }) => {
               />
             </Form.Group>
             <Form.Group>
-              <Button variant="primary" onClick={translateAndGenerateImages} disabled={isLoading}>
+              <Button variant="primary" onClick={handleCreateImages} disabled={isLoading}>
                 {isLoading ? '생성 중...' : '완료'}
               </Button>
             </Form.Group>

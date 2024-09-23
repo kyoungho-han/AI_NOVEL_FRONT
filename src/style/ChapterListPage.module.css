@@ -14,8 +14,12 @@
 
 .imgContainer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px; /* 원하는 이미지 최대 너비 설정 */
+  margin: 0 auto; /* 가운데 정렬 */
 }
 
 .img2 img {
@@ -35,24 +39,39 @@
   margin-top: 20px;
 }
 
+.titleContainer {
+  display: flex;
+  justify-content: center; /* 제목 중앙 정렬 */
+  align-items: center; /* 제목 수직 중앙 정렬 */
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f8f3e9; /* 배경색 */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 100%; /* 컨테이너 최대 너비 설정 */
+}
+
+.novelTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #5d4037;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  letter-spacing: 1.5px;
+  border: 2px solid #d7ccc8;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #d7ccc8, #a1887f);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  max-width: 100%; /* 제목이 컨테이너의 폭을 초과하지 않도록 */
+  width: auto; /* 너비 자동 조절 */
+  overflow-wrap: break-word; /* 긴 단어 줄 바꿈 */
+}
+
 .bookCover {
   width: 100%;
-  max-width: 400px;
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Modals.css */
-
-.resultImg {
-  border: 2px solid #ddd;
-  border-radius: 4px;
-  margin: 5px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.resultImg:hover {
-  transform: scale(1.05);
+  display: block;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 이미지에 약간의 그림자 효과 */
+  border-radius: 8px; /* 이미지 모서리를 둥글게 */
 }

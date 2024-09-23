@@ -65,8 +65,8 @@ function App() {
           <Route path = "/myNovels" element = { <MyNovels />} />
           <Route path='/detail' element={<DetailPage/>}></Route>
           <Route path="/detail/:novelId" element={<DetailPage />} />
-          <Route path='/bookview' element={<BookViewPage/>}/>
-          <Route path='/bookview/:chapterId' element={<BookViewPage/>}/>
+          <Route path='/bookView' element={<BookViewPage/>}/>
+          <Route path='/bookView/:chapterId' element={<BookViewPage/>}/>
         </Routes>          
       </NovelProvider>
     </Router>

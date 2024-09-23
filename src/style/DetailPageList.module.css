@@ -1,0 +1,67 @@
+.chapterListContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f8f9;
+    border-radius: 12px;
+    width: 80%;
+    margin: 20px auto; /* 중앙 정렬 */
+}
+
+.chapterItem {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #eee;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.chapterItem:hover {
+    background-color: #f1f1f1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chapterDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.chapterIndex {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.chapterName {
+    font-size: 1.2rem;
+    color: #000;
+    font-weight: 600;
+    margin: 5px 0;
+}
+
+.chapterDate {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.readButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.readButton:hover {
+    background-color: #45a049;
+}

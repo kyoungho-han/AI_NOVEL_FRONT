@@ -136,6 +136,10 @@ const WriteChapter = () => {
         setShowModal(true);
     }
 
+    const handleBackToList = () => {
+        navigate(`/chapterListPage/${novelId}`);
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.chapterTitle}>
@@ -162,8 +166,8 @@ const WriteChapter = () => {
             )}
             <hr />
             <div className={styles.btn}>
+                <Button variant="outline-warning" onClick={handleBackToList}>목록 가기</Button>
                 <Button variant="outline-info" onClick={handleSelectImg}>그림 선택</Button>
-                <Button variant="outline-warning">임시 저장</Button>
                 <Button variant="outline-success" onClick={handleCompleteWriting}>글 작성 완료</Button>
             </div>
             <Modals

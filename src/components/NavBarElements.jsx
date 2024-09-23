@@ -24,8 +24,8 @@ const NavBarElements = (props) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="insertNovelData">소설 쓰러 가기</Nav.Link>
-                <Nav.Link href="bookList">소설 구경 가기</Nav.Link>                
+                <Nav.Link href="/insertNovelData">소설 쓰러 가기</Nav.Link>
+                <Nav.Link href="/bookList">소설 구경 가기</Nav.Link>
               </Nav>
               <Nav>
                 {at || <Nav.Link href="/login">로그인</Nav.Link>}

@@ -9,104 +9,88 @@ import { useNavigate } from "react-router-dom";
 
 function DetailPage() {
   const accessToken = useSelector((state) => state.authToken);
-  
+
   const { novelId } = useParams();
-  
-  //챕터 리스트
-  const [chaterList, setChapterList] = useState([]);
 
-  //소설 데이터
-  const [nobelData, setNovelData] = useState({});
-
-  //사진 url
-  const [novelImage, setnovelImage] = useState({})
+  const [chapterList, setChapterList] = useState([]);
+  const [novelData, setNovelData] = useState({});
+  const [novelImage, setNovelImage] = useState("");
 
   const navigate = useNavigate();
-  
- //챕터리스트 불러오기
+
+  // 챕터 리스트 불러오기
   useEffect(() => {
-    const ChapterList = async() => {
+    const fetchChapterList = async () => {
       try {
-       
-        const response =  await axios.get(`http://localhost:3000/chapters?novelId=${novelId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken.accessToken}`
-          }
-        }).then(function(response) {
-        setChapterList(response.data.dtoList)
+        const response = await axios.get(`http://localhost:3000/chapters?novelId=${novelId}`, {
+          headers: { Authorization: `Bearer ${accessToken.accessToken}` }
         });
+        setChapterList(response.data.dtoList);
       } catch (error) {
         console.log(error);
         alert("로그인을 해주세요");
-        navigate("/login")
+        navigate("/login");
       }
-    }
-    ChapterList()
-  }, []); // 빈 배열을 넣어 useEffect가 한 번만 실행되도록 설정
+    };
+    fetchChapterList();
+  }, [novelId, accessToken, navigate]);
 
-  //소설 불러오기
+  // 소설 정보 불러오기
   useEffect(() => {
-    const ChapterList = async() => {
+    const fetchNovelData = async () => {
       try {
-       
-        const response =  await axios.get(`http://localhost:3000/novels/${novelId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken.accessToken}`
-          }
-        }).then(function(response) {
-          setNovelData(response.data);
+        const response = await axios.get(`http://localhost:3000/novels/${novelId}`, {
+          headers: { Authorization: `Bearer ${accessToken.accessToken}` }
         });
+        setNovelData(response.data);
       } catch (error) {
         console.log(error);
         alert("로그인을 해주세요");
-        navigate("/login")
+        navigate("/login");
       }
-    }
-    ChapterList()
-  }, []); // 빈 배열을 넣어 useEffect가 한 번만 실행되도록 설정
+    };
+    fetchNovelData();
+  }, [novelId, accessToken, navigate]);
 
-// 소설 사진 가져오기
+  // 소설 이미지 불러오기
   useEffect(() => {
-    const ChapterList = async() => {
+    const fetchNovelImage = async () => {
       try {
-       
-        const response =  await axios.get(`http://localhost:3000/novels/download/${novelId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken.accessToken}`
-          }
-        }).then(function(response) {
-          setnovelImage(response.data);
+        const response = await axios.get(`http://localhost:3000/novels/download/${novelId}`, {
+          headers: { Authorization: `Bearer ${accessToken.accessToken}` }
         });
+        setNovelImage(response.data.string);
       } catch (error) {
         console.log(error);
       }
-    }
-    ChapterList()
-  }, []); // 빈 배열을 넣어 useEffect가 한 번만 실행되도록 설정
+    };
+    fetchNovelImage();
+  }, [novelId, accessToken]);
 
-  const openBookView = async (chapterId) =>{
-    if(accessToken.authenticated){
-      navigate(`/bookview/${chapterId}`)
-    }
-    else{
+  const openBookView = (chapterId) => {
+    if (accessToken.authenticated) {
+      navigate(`/bookView/${chapterId}`);
+    } else {
       alert("로그인을 해주세요");
-      navigate("/login")
+      navigate("/login");
     }
-   
-  }
-  
-  return(
-    <div className={style.container}>
-      <img src={novelImage.string} alt="page"></img>
-      <div className={style.bookData}>
-        <h2>{nobelData.title}</h2>
-        <h3>{nobelData.name}</h3>
-        <p>좋아요 ㅁ</p>
-        <div>
-         <DetailPageList datas={chaterList} onClick={openBookView}></DetailPageList>
+  };
+
+  return (
+      <div className={style.container}>
+        <div className={style.imageContainer}>
+          <img src={novelImage} alt="Book Cover" className={style.bookImage} />
+        </div>
+        <div className={style.bookData}>
+          <h2>{novelData.title}</h2>
+          <h3>Author: {novelData.name}</h3>
+          <p>좋아요: {novelData.love}</p>
+          <div>
+            <DetailPageList datas={chapterList} onClick={openBookView} />
+          </div>
         </div>
       </div>
-      
-    </div>
   );
-}export default DetailPage;
+}
+
+export default DetailPage;
