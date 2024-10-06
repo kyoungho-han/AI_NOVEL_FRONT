@@ -4,9 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Spinner } from 'react-bootstrap';
 import { Configuration, OpenAIApi } from 'openai';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
 import "../style/Modals.css";
 
 const CoverModals = ({ show, onClose, onCloseWithImg }) => {
@@ -14,12 +11,10 @@ const CoverModals = ({ show, onClose, onCloseWithImg }) => {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const accessToken = useSelector((state) => state.authToken);
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_DALL_E_API_KEY,
   });
   const openai = new OpenAIApi(configuration);
-  const navigate = useNavigate();
 
   const handleCreateImages = async () => {
     try {

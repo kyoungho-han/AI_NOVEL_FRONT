@@ -4,11 +4,14 @@ import { useLocation } from 'react-router-dom';
 import Logout from '../pages/LogoutPage';
 
 const NavBarElements = (props) => {
-  const {at, userName} = props;
+  const {at} = props;
+
   const location = useLocation();
+
   if (location.pathname === '/') {
     return null; // 루트 페이지에서 NavBarElements를 렌더링하지 않습니다.
   }
+
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
           <Container>
@@ -32,7 +35,7 @@ const NavBarElements = (props) => {
                 {at ||  <Nav.Link eventKey={2} href="/join">
                   회원가입
                 </Nav.Link>}
-                {at && <Nav.Link href="/myNovels">{userName}님 환영합니다.</Nav.Link>}
+                {at && <Nav.Link href="/myNovels">내 서제</Nav.Link>}
                 {at && <Logout></Logout>}
 
               </Nav>

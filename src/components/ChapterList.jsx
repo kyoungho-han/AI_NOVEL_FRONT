@@ -5,8 +5,8 @@ import { NovelContext } from '../context/NovelContext';
 import axios from "axios";
 
 function ChapterList({ novelId, chapterList })  {
-    const { novelTitle, novelGenre, userName, setChapterId, prevChapterId, setPrevChapterId } = useContext(NovelContext);
-    const [chapterCount, setChapterCount] = useState(Math.max(1, chapterList.length));
+    const { novelTitle, novelGenre, userName } = useContext(NovelContext);
+    const chapterCount = Math.max(1, chapterList.length);
     const [chapterImages, setChapterImages] = useState([]);
 
     useEffect(() => {
@@ -34,7 +34,6 @@ function ChapterList({ novelId, chapterList })  {
     const renderChapterItems = () => {
         const chapterItems = [];
         const totalChapters = chapterList.length ? chapterList.length + 1 : 1;
-        setPrevChapterId(prevChapterId);
 
         for (let i = 0; i < totalChapters; i++) {
             const chapterImage = chapterImages[i];

@@ -4,17 +4,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import "../style/Modals.css";
 import { Configuration, OpenAIApi } from "openai";
-import axios from "axios";
-import {useSelector} from 'react-redux';
 import {Spinner} from "react-bootstrap";
 
 const Modals = ({ show, onClose, onCloseWithImg }) => {
 
-  const accessToken  = useSelector((state) => state.authToken);
   const [prompt, setPrompt] = useState("");
   const [results, setResults] = useState([]);
-  const [selectedImage, setSelectedImage] = useState("");
-  const [changePrompt, setChangePrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_DALL_E_API_KEY,
@@ -35,7 +30,6 @@ const Modals = ({ show, onClose, onCloseWithImg }) => {
       });
       const generatedImages = imageResponse.data.data.map(item => item.url);
 
-      setChangePrompt(prompt);
       setResults(generatedImages);
     } catch (error) {
       console.error(error);

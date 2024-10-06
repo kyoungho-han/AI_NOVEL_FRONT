@@ -7,14 +7,30 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.contentContainer {
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 중앙 정렬 */
+}
+
+.chapterImage {
+    max-width: 200px; /* 이미지 최대 너비 설정 */
+    margin-right: 20px; /* 이미지와 글 사이의 간격 */
+    border-radius: 8px; /* 이미지 모서리를 둥글게 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 이미지에 그림자 효과 */
+}
+
 .title {
     font-size: 2.5rem;
     font-weight: bold;
     color: #333;
-    text-align: center;
+    text-align: left; /* 제목을 왼쪽 정렬 */
     margin-bottom: 20px;
     border-bottom: 2px solid #ddd;
     padding-bottom: 10px;
+}
+
+.textContent {
+    flex: 1; /* 텍스트 컨텐츠가 남은 공간을 차지하도록 설정 */
 }
 
 .content {
@@ -31,3 +47,25 @@
     color: #666;
     margin-top: 50px;
 }
+
+.buttonContainer {
+    display: flex; /* 플렉스 박스 설정 */
+    justify-content: flex-end; /* 버튼을 오른쪽 끝에 정렬 */
+    margin-top: 20px; /* 버튼과 상단 요소 간격 */
+}
+
+.backButton {
+    padding: 10px 20px;
+    background-color: #537188; /* 버튼 배경색 */
+    color: #fff; /* 버튼 텍스트 색상 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem; /* 버튼 텍스트 크기 */
+}
+
+.backButton:hover {
+    background-color: #4b646e; /* 호버 시 버튼 색상 */
+}
+

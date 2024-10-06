@@ -1,7 +1,7 @@
 .grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* 가운데 정렬 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
   gap: 20px; /* 아이템들 간의 간격 */
   padding: 20px; /* 그리드 전체에 패딩 추가 */
 }
@@ -45,4 +45,11 @@
 .details p {
   font-size: 0.9rem;
   color: #666;
+}
+
+.loadingMessage {
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  height: 100vh;           /* 화면 전체 높이 */
+  font-size: 20px;        /* 폰트 크기 조절 (필요 시) */
 }

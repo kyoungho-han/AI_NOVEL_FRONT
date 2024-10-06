@@ -1,14 +1,10 @@
 import {useState, React} from "react";
 import { Link } from "react-router-dom";
-import NavBarElements from "../components/NavBarElements";
 import style from "../style/Login.module.css"
 
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-
-import { HiLockClosed } from 'react-icons/hi'
-import { ErrorMessage } from '@hookform/error-message';
 
 import { loginUser } from '../api/Users';
 import { setRefreshToken } from '../storage/Cookie';
@@ -19,25 +15,7 @@ import { SET_TOKEN } from '../store/Auth';
 function Login(props) {
   // 1. 로그인시 서버측에 토큰 요청
   // 2. 만약에 맞다면 메인 페이지로 이동
-  // 3. 만약에 틀리면 입력창 밑에 메세지 출력 
-  // 4. 
-
-  //입력한 유저정보
-  const [username, setUserId] = useState("");
-  const [password, setUserPw] = useState("");
-
-  //토큰 여부
-  const [isToken, setIsToken] = useState(false);
-
-  const onChange1 = (e)=>{
-    setUserId(e.target.value)
-  }
-  const onChange2 = (e)=>{
-    setUserPw(e.target.value)
-  }
-
-  //오류 메세지
-  const [loginMessage, setLoginMessage] = useState("")
+  // 3. 만약에 틀리면 입력창 밑에 메세지 출력
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -63,7 +41,6 @@ function Login(props) {
        // input 태그 값 비워주는 코드
        setValue("password", "");
   };
- 
 
 
   return(

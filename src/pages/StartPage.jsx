@@ -5,7 +5,7 @@ import StartImage2 from '../images/StartImage1.jpeg'
 import StartImage3 from '../images/StartImage3.jpeg'
 import style from "../style/Start.module.css"
 import { DELETE_TOKEN } from '../store/Auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 

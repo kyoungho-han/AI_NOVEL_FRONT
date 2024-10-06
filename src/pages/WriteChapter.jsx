@@ -1,20 +1,18 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import styles from '../style/WriteChapter.module.css';
-import Form from 'react-bootstrap/Form';
 import Modals from '../components/Modals';
 import axios from 'axios';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { NovelContext } from '../context/NovelContext';
 
 const WriteChapter = () => {
     const { novelId, chapterId, setChapterId, prevChapterId } = useContext(NovelContext);
-    const [ chapterTitle, setChapterTitle ] = useState('');
-    const [ textValue, setTextValue ] = useState('');
-    const [ showModal, setShowModal ] = useState(false);
-    const [prevChapterIdLocal, setPrevChapterIdLocal] = useState(null); // 로컬 상태 추가
+    const [chapterTitle, setChapterTitle] = useState('');
+    const [textValue, setTextValue] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [prevChapterIdLocal, setPrevChapterIdLocal] = useState(null);
     const [selectedImage, setSelectedImage] = useState("");
-    const [novelData, setNovelData] = useState({});
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -25,7 +23,7 @@ const WriteChapter = () => {
     useEffect(() => {
         if (!isNewChapter && currentChapterId && currentChapterId !== prevChapterIdLocal) {
             setChapterId(currentChapterId);
-            setPrevChapterIdLocal(currentChapterId); // 현재 chapterId를 로컬 상태로 설정
+            setPrevChapterIdLocal(currentChapterId);
 
             axios.get(`http://localhost:3000/chapters/${currentChapterId}`)
                 .then(response => {
@@ -45,30 +43,20 @@ const WriteChapter = () => {
         }
     }, [prevChapterIdLocal]);
 
-    useEffect(() => {
-        axios.get(`http://localhost:3000/novels/${novelId}`)
-            .then(response => {
-                setNovelData(response.data);
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }, [novelId])
-
-    // 모달 닫기
     const handleCloseModalWithImg = (selectedImage) => {
-        setSelectedImage(selectedImage); // 선택된 이미지 업데이트
+        setSelectedImage(selectedImage);
         setShowModal(false);
     };
 
-    // 모달 닫기
     const handleCloseModal = () => {
         setShowModal(false);
     };
 
-    // 현재 작성중인 소설 내용 전송
     const handleCompleteWriting = () => {
+        if (!selectedImage) {
+            alert("챕터 그림을 먼저 선택해주세요.");
+            return false;
+        }
 
         const data = {
             chapterName: chapterTitle,
@@ -87,7 +75,7 @@ const WriteChapter = () => {
                         axios.post(`http://localhost:3000/chapters/upload/${response.data.chapterId}`, fileData)
                             .then(response => {
 
-                            })
+                            });
                     }
                     navigate(`/chapterListPage/${novelId}`);
                 })
@@ -104,7 +92,7 @@ const WriteChapter = () => {
                         axios.put(`http://localhost:3000/chapters/updateFile/${chapterId}`, fileData)
                             .then(response => {
 
-                            })
+                            });
                     }
                     navigate(`/chapterListPage/${novelId}`);
                 })
@@ -117,13 +105,12 @@ const WriteChapter = () => {
     const handleChangeTitle = (event) => {
         const newTitle1 = event.target.value;
         setChapterTitle(newTitle1);
-    }
+    };
 
     const handleChangeWriting = (event) => {
         const newText1 = event.target.value;
         setTextValue(newText1);
     };
-
 
     const getByteCount = (text) => {
         const encoder = new TextEncoder();
@@ -134,11 +121,11 @@ const WriteChapter = () => {
 
     const handleSelectImg = () => {
         setShowModal(true);
-    }
+    };
 
     const handleBackToList = () => {
         navigate(`/chapterListPage/${novelId}`);
-    }
+    };
 
     return (
         <div className={styles.container}>
@@ -151,16 +138,18 @@ const WriteChapter = () => {
                 />
             </div>
             <hr />
-            <textarea
-                className={styles.txtarea}
-                value={textValue}
-                onChange={handleChangeWriting}
-            />
+            <div className={styles.contentWrapper}>
+                <textarea
+                    className={styles.txtarea}
+                    value={textValue}
+                    onChange={handleChangeWriting}
+                />
+            </div>
             <p className={styles.byteCount}>
                 {getByteCount(textValue)} bytes / {(5000 / 1024).toFixed(2)} KB
             </p>
             {selectedImage && (
-                <div>
+                <div className={styles.imageWrapper}>
                     <img src={selectedImage} alt="Selected" />
                 </div>
             )}
@@ -168,7 +157,7 @@ const WriteChapter = () => {
             <div className={styles.btn}>
                 <Button variant="outline-warning" onClick={handleBackToList}>목록 가기</Button>
                 <Button variant="outline-info" onClick={handleSelectImg}>그림 선택</Button>
-                <Button variant="outline-success" onClick={handleCompleteWriting}>글 작성 완료</Button>
+                <Button variant="outline-success" onClick={handleCompleteWriting}>글 저장 완료</Button>
             </div>
             <Modals
                 show={showModal}
@@ -177,6 +166,6 @@ const WriteChapter = () => {
             />
         </div>
     );
-}
+};
 
 export default WriteChapter;

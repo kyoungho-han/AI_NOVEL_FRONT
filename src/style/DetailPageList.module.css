@@ -3,65 +3,45 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #f8f8f9;
+    background-color: #f9f9f9; /* 연한 배경색 */
     border-radius: 12px;
-    width: 80%;
-    margin: 20px auto; /* 중앙 정렬 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%; /* 중앙에 맞추기 위해 폭 설정 */
+    margin: 0 auto;
 }
 
 .chapterItem {
+    display: flex; /* 챕터 텍스트와 이미지를 나란히 배치 */
+    align-items: center; /* 이미지와 텍스트의 수직 중앙 정렬 */
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    margin-bottom: 15px;
+    padding: 15px 10px;
+    margin-bottom: 10px;
     border-radius: 8px;
-    background-color: #ffffff;
-    border: 1px solid #eee;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
-.chapterItem:hover {
-    background-color: #f1f1f1;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.chapterInfo {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
-.chapterDetails {
-    display: flex;
-    flex-direction: column;
+.chapterImage {
+    width: 50px; /* 이미지 크기 조절 */
+    height: auto;
+    border-radius: 4px; /* 모서리를 둥글게 */
+    margin-right: 15px; /* 텍스트와 이미지 간의 여백 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
 }
 
 .chapterIndex {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
-}
-
-.chapterName {
     font-size: 1.2rem;
-    color: #000;
     font-weight: 600;
-    margin: 5px 0;
+    color: #333;
+    margin: 0;
+    flex-grow: 1; /* 텍스트가 남은 공간을 차지하도록 */
 }
 
-.chapterDate {
-    font-size: 0.8rem;
-    color: #888;
-}
-
-.readButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.readButton:hover {
-    background-color: #45a049;
-}

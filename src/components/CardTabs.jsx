@@ -5,7 +5,6 @@ import axios from "axios";
 import Tabs from "react-bootstrap/Tabs";
 import { Tab, Container, Row, TabContent } from "react-bootstrap";
 import NewCard from "./NewCard";
-import BestCards from "./BestCards";
 import style from "../style/CardTabs.module.css";
 
 function CardTabs() {
@@ -23,12 +22,11 @@ function CardTabs() {
         setBestData(response.data.dtoList);
       } catch (error) {
         console.log(error);
-        alert("로그인을 해주세요");
-        navigate("/login");
       }
     };
+
     fetchBestData();
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
     const fetchNewData = async () => {
@@ -39,12 +37,10 @@ function CardTabs() {
         setNewData(response.data.dtoList);
       } catch (error) {
         console.log(error);
-        alert("로그인을 해주세요");
-        navigate("/login");
       }
     };
     fetchNewData();
-  }, [navigate]);
+  }, []);
 
   const handleTitleClick = (novelId) => {
     if (accessToken.authenticated) {
@@ -57,14 +53,14 @@ function CardTabs() {
 
   return (
       <Container className={style.cardTabs}>
-        <Tabs defaultActiveKey="best" id="card-tabs">
-          <Tab eventKey="best" title="베스트 소설">
+        <Tabs defaultActiveKey="latest" id="card-tabs">
+          {/*<Tab eventKey="best" title="베스트 소설">
             <TabContent>
               <Row>
                 <BestCards bestData={bestData} onClick={handleTitleClick} />
               </Row>
             </TabContent>
-          </Tab>
+          </Tab>*/}
           <Tab eventKey="latest" title="신작 소설">
             <TabContent>
               <Row>

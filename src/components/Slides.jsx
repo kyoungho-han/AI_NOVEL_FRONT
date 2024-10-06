@@ -8,7 +8,7 @@ function Slides() {
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src="img/qqq.jpg"
+                    src="img/ai3.jpg"
                     alt="First slide"
                 />
                 <Carousel.Caption></Carousel.Caption>
@@ -16,7 +16,7 @@ function Slides() {
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src="img/www.jpg"
+                    src="img/ai2.jpg"
                     alt="Second slide"
                 />
                 <Carousel.Caption></Carousel.Caption>
@@ -24,7 +24,7 @@ function Slides() {
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src="img/eeee.jpg"
+                    src="img/ai1.jpg"
                     alt="Third slide"
                 />
                 <Carousel.Caption></Carousel.Caption>

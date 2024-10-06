@@ -1,10 +1,6 @@
 import React from "react";
 import Logo from "../images/logo.jpeg"
-import { Link, useNavigate } from "react-router-dom";
-import Login from "../pages/LoginPage";
-import { styled } from "styled-components";
-
-
+import { Link } from "react-router-dom";
 
 function NavList(props) {
 

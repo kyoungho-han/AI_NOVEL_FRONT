@@ -1,5 +1,4 @@
 import React from "react";
-import Pagination from 'react-bootstrap/Pagination';
 import styled from "styled-components";
 
 const PageUl = styled.ul`

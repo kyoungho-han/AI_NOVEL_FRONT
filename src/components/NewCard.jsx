@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import NewCardImage from "./NewCardImage";
@@ -9,15 +9,8 @@ function NewCard(props) {
 
 
   if (!newData) {
-    // 로딩 상태를 표시하거나 플레이스홀더 컴포넌트를 반환합니다.
-    return <div>Loading...</div>;
+    return <div>신작 소설이 없습니다.</div>;
   }
-
-  if (newData.length === 0) {
-    // newData가 빈 배열인 경우를 처리합니다.
-    return <div>데이터가 없습니다.</div>;
-  }
-  
 
   return (
     <>

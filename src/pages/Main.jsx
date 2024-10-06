@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import axios from "axios";
 import { NovelContext } from '../context/NovelContext';
@@ -10,17 +9,18 @@ import style from "../style/Main.module.css";
 function Main() {
   const accessToken = useSelector((state) => state.authToken);
   const { setUserName } = useContext(NovelContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/authors/name', {
-          headers: {
-            Authorization: `Bearer ${accessToken.accessToken}`
-          }
-        });
-        setUserName(response.data.name);
+        if(accessToken.accessToken !== null) {
+          const response = await axios.get('http://localhost:3000/authors/name', {
+            headers: {
+              Authorization: `Bearer ${accessToken.accessToken}`
+            }
+          });
+          setUserName(response.data.name);
+        }
       } catch (error) {
         console.log(error);
       }

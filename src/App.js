@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Start from './pages/StartPage';
@@ -10,8 +9,6 @@ import BookListPage from './pages/BookListPage';
 import WriteChapter from './pages/WriteChapter';
 import InsertNovelData from './pages/InsertNovelData';
 import ChapterListPage from './pages/ChapterListPage';
-import restProVider from 'ra-data-simple-rest'
-import Logout from './pages/LogoutPage';
 import MyNovels from './pages/MyNovels';
 import NavBarElements from './components/NavBarElements';
 import { NovelProvider } from './context/NovelContext';
@@ -21,23 +18,16 @@ import { useSelector } from 'react-redux';
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const dataProvider = restProVider('http://localhost:8080');
-
-
 function App() {
   const accessToken  = useSelector((state) => state.authToken);
   
   const [userName, setUserName] = useState("")
 
   useEffect(() => {
-   
     const fetchData = async () => {
       try {
        
         const response = await axios.get('http://localhost:3000/authors/name', {
-          headers: {
-            Authorization: `Bearer ${accessToken.accessToken}`
-          }
         });
         return setUserName(response.data.name)
       } catch (error) {
@@ -46,7 +36,8 @@ function App() {
     };
 
     fetchData();
-  }, []); // 빈 배열을 넣어 useEffect가 한 번만 실행되도록 설정
+  }, [accessToken.authenticated]); // 빈 배열을 넣어 useEffect가 한 번만 실행되도록 설정
+
 
   return (
     <Router>

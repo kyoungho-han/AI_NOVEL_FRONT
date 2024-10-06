@@ -1,11 +1,9 @@
 import React, {useEffect, createContext, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-// Create the context
 const NovelContext = createContext();
 
-// Create a provider component
 const NovelProvider = ({ children }) => {
     const [novelTitle, setNovelTitle] = useState(() => {
         const savedNovelTitle = localStorage.getItem('novelTitle');
@@ -73,14 +71,18 @@ const NovelProvider = ({ children }) => {
         localStorage.setItem('prevChapterId', prevChapterId);
     }, [prevChapterId]);
 
+    useEffect(() => {
+        setAt(accessToken.authenticated);
+    }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
-        const response = await axios.get('http://localhost:3000/authors/name', {
-        });
-        setAt(accessToken.authenticated);
-        return setUserName(response.data.name);
+          if(accessToken.authenticated) {
+              axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
+              const response = await axios.get('http://localhost:3000/authors/name', {});
+              return setUserName(response.data.name);
+          }
       } catch (error) {
         console.log(error);
       }

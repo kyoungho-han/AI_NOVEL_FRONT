@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 const ChapterListPage = () => {
     const { novelId, novelTitle } = useContext(NovelContext);
     const [showModal, setShowModal] = useState(false);
-    const [datas, setDatas] = useState([]);
+    const [chapterData, setChapterData] = useState([]);
     const [selectedImage, setSelectedImage] = useState("");
     const navigate = useNavigate();
 
@@ -28,8 +28,7 @@ const ChapterListPage = () => {
                     params: { novelId }
                 });
                 if (response.data && response.data.dtoList.length > 0) {
-                    setDatas(response.data.dtoList);
-                    console.log(response.data);
+                    setChapterData(response.data.dtoList);
                 }
             } catch (error) {
                 console.log(error);
@@ -37,6 +36,21 @@ const ChapterListPage = () => {
         };
         fetchData();
     }, [accessToken.accessToken, novelId]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
+                const response = await axios.get(`http://localhost:3000/novels/drawing/${novelId}`);
+                if (response.data.fileName) {
+                    setSelectedImage(response.data.fileName);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
 
     const handleCloseModalWithImg = (selectedImage) => {
         setSelectedImage(selectedImage); // 선택된 이미지 업데이트
@@ -65,6 +79,11 @@ const ChapterListPage = () => {
     };
 
     const handleSubmit = () => {
+        if (!selectedImage) {
+            alert("소설 표지를 먼저 선택해주세요.");
+            return false;
+        }
+
         const confirmPublish = window.confirm("소설이 출판되면 다시 수정할 수 없습니다. 정말 출판 하시겠습니까?");
 
         if (confirmPublish) {
@@ -72,7 +91,7 @@ const ChapterListPage = () => {
                 title: novelTitle,
                 isPublic: true
             };
-            console.log(data)
+
             axios.put(`http://localhost:3000/novels/${novelId}`, data)
                 .then(response => {
                     alert("소설이 성공적으로 출판 되었습니다.");
@@ -85,6 +104,11 @@ const ChapterListPage = () => {
             alert("출판이 취소되었습니다.");
         }
     };
+
+    const handleTempSave = () => {
+        alert("소설이 임시 저장되었습니다. 내 서제에서 확인해주세요.");
+        navigate('/main');
+    }
 
     return (
         <div className={styles.section}>
@@ -106,10 +130,11 @@ const ChapterListPage = () => {
 
                     <Col xs={12} md={6}>
                         <div className={styles.chapter}>
-                            <ChapterList novelId={novelId} chapterList={datas} />
+                            <ChapterList novelId={novelId} chapterList={chapterData} />
                         </div>
                         <div className={styles.button}>
-                            <Button variant="outline-info" onClick={handleSelectImg}>
+                            <Button variant="outline-warning" onClick={handleTempSave}>임시 저장</Button>
+                            <Button variant="outline-info" onClick={handleSelectImg} style={{marginLeft: '10px'}}>
                                 소설 표지 선택
                             </Button>
                             <Button variant="outline-success" onClick={handleSubmit} style={{marginLeft: '10px'}}>

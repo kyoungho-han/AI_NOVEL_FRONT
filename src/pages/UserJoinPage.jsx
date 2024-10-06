@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router';
 import style from "../style/UserJoin.module.css"
-import NavBarElements from "../components/NavBarElements";
-import {useSelector} from "react-redux";
 
 function UserJoin() {
 
@@ -12,19 +10,16 @@ function UserJoin() {
   //회원 가입정보
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
-  const [userPhone, setUserPhone] = useState("");
   const [userName, setUserName] = useState("");
 
   //유효성 검사 t/f 여부
   const [isuserId, setIsUserId] = useState(false);
   const [isuserPw, setIsUserPw] = useState(false);
-  const [isuserPhone, setIsUserPhone] = useState(false);
   const [isuserName, setIsUserName] = useState(false);
 
   //유효성 검사 후 보여질 메세지
   const [idMessage, setIdMessage] = useState("");
   const [pwMessage, setPwMessage] = useState("");
-  const [phoneMessage, setPhoneMessage] = useState("");
   const [nameMessage, setNameMessage] = useState("");
 
   // 가입버튼 활성화 여부
@@ -32,15 +27,6 @@ function UserJoin() {
 
   // 아이디 중복 여부 메세지
   const [checkId, setChekId] = useState("");
-
-  const accessToken = useSelector((state) => state.authToken);
-
-  const [userJson, setUserJson] = useState({
-    id: null,
-    password: null,
-    userName: null,
-    tel: null,
-  })
 
   // 유저정보를 전부 옳바르게 입력했는지 확인 후 가입버튼 활성화
   useEffect(() => {
@@ -102,22 +88,6 @@ function UserJoin() {
      }
   };
 
-  // const onChangePhone = (e) =>{
-  //   const phone = e.target.value;
-  //   const effectivenessPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-
-  //   if(!effectivenessPhone.test(phone)){
-  //     setPhoneMessage("010-xxxx-xxxx 형식으로 입력해 주세요");
-  //     setIsUserPhone(false);
-  //   }
-  //   else{
-  //     setUserPhone(phone);
-  //     setPhoneMessage("올바른 형식입니다.");
-  //     setIsUserPhone(true);
-  //   }
-  // };
-  
-
   //서버로 값 보내는 메서드
   const dataPush = () =>{
     axios.post("http://localhost:8080/authors/join", {
@@ -161,10 +131,6 @@ function UserJoin() {
           <input type="text" id="name" placeholder="Name" maxLength="5" onChange={onChangeName}/>
           <p>{nameMessage}</p>
         </div>
-         {/* <div className={style.inputArea}>
-          <input type="tel" id="tel" placeholder="휴대폰 번호" maxLength="16"  onChange={onChangePhone}/>
-          <p>{phoneMessage}</p>
-        </div>  */}
        <div className={style.submitButton}>
           <button type="button" disabled={buttonUsed} onClick={dataPush}>가입하기</button>
           
