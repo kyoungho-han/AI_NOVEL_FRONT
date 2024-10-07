@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { NovelContext } from '../context/NovelContext';
 import Button from 'react-bootstrap/Button';
 import styles from '../style/InsertNovelData.module.css';
@@ -8,6 +8,11 @@ import axios from 'axios';
 const InsertNovelData = () => {
   const { novelTitle, setNovelTitle, novelGenre, setNovelGenre, userName, setNovelId } = useContext(NovelContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setNovelTitle('');
+    setNovelGenre('추리');
+  }, []);
 
   const handleSubmit = () => {
     const data = {

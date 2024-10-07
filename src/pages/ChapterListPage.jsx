@@ -9,13 +9,15 @@ import Button from 'react-bootstrap/Button';
 import CoverModals from '../components/CoverModals';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const ChapterListPage = () => {
-    const { novelId, novelTitle } = useContext(NovelContext);
+    const { novelTitle } = useContext(NovelContext);
     const [showModal, setShowModal] = useState(false);
     const [chapterData, setChapterData] = useState([]);
     const [selectedImage, setSelectedImage] = useState("");
+    const [novelData, setNovelData] = useState({});
+    const { novelId } = useParams();
     const navigate = useNavigate();
 
     const accessToken = useSelector((state) => state.authToken);
@@ -30,6 +32,20 @@ const ChapterListPage = () => {
                 if (response.data && response.data.dtoList.length > 0) {
                     setChapterData(response.data.dtoList);
                 }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, [accessToken.accessToken, novelId]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/novels/${novelId}`, {
+                    headers: { Authorization: `Bearer ${accessToken.accessToken}` }
+                });
+                setNovelData(response.data);
             } catch (error) {
                 console.log(error);
             }
@@ -117,7 +133,7 @@ const ChapterListPage = () => {
                     <Col xs={12} md={6}>
                         <div className={styles.imgContainer}>
                             <div className={styles.titleContainer}>
-                                <h4 className={styles.novelTitle}>{novelTitle}</h4>
+                                <h4 className={styles.novelTitle}>{novelData.title}</h4>
                             </div>
                             <img
                                 src={selectedImage || "../img/bookImg.png"}
@@ -126,11 +142,9 @@ const ChapterListPage = () => {
                             />
                         </div>
                     </Col>
-
-
                     <Col xs={12} md={6}>
                         <div className={styles.chapter}>
-                            <ChapterList novelId={novelId} chapterList={chapterData} />
+                            <ChapterList novelId={novelId} chapterList={chapterData} novelData={novelData} />
                         </div>
                         <div className={styles.button}>
                             <Button variant="outline-warning" onClick={handleTempSave}>임시 저장</Button>

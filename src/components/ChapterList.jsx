@@ -1,11 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from 'react-router-dom';
-import { NovelContext } from '../context/NovelContext';
 import axios from "axios";
 
-function ChapterList({ novelId, chapterList })  {
-    const { novelTitle, novelGenre, userName } = useContext(NovelContext);
+function ChapterList({ novelId, chapterList, novelData })  {
     const chapterCount = Math.max(1, chapterList.length);
     const [chapterImages, setChapterImages] = useState([]);
 
@@ -78,7 +76,7 @@ function ChapterList({ novelId, chapterList })  {
                 className="d-flex justify-content-between align-items-center"
             >
                 <div className="ms-2 me-auto">
-                    <div className="fw-bold"> {novelTitle} / {userName} / {novelGenre} </div>
+                    <div className="fw-bold"> {novelData.title} / {novelData.name} / {novelData.genre} </div>
                 </div>
             </ListGroup.Item>
             {renderChapterItems()}

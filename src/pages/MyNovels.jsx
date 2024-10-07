@@ -3,18 +3,18 @@ import { Row, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { NovelContext } from '../context/NovelContext';
-import BestCards from '../components/BestCards';
-import NewCard from '../components/NewCard';
 import style from '../style/MyNovels.module.css';
+import FinishedCards from "../components/FinishedCards";
+import UnfinishedCards from "../components/UnfinishedCards";
 
 const MyNovels = () => {
     const { userName } = useContext(NovelContext);
-    const [bestData, setBestData] = useState([]);
-    const [newData, setNewData] = useState([]);
+    const [unfinishedNovels, setUnfinishedNovels] = useState([]);
+    const [finishedNovels, setFinishedNovels] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchBestData = async () => {
+        const fetchUnfinishedNovels = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/novels`, {
                     params: {
@@ -23,16 +23,16 @@ const MyNovels = () => {
                         isPublic: false
                     }
                 });
-                setBestData(response.data.dtoList);
+                setUnfinishedNovels(response.data.dtoList);
             } catch (error) {
                 console.log(error);
             }
         };
-        fetchBestData();
+        fetchUnfinishedNovels();
     }, [userName]);
 
     useEffect(() => {
-        const fetchNewData = async () => {
+        const fetchFinishedNovels = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/novels`, {
                     params: {
@@ -41,19 +41,23 @@ const MyNovels = () => {
                         isPublic: true
                     }
                 });
-                setNewData(response.data.dtoList);
+                setFinishedNovels(response.data.dtoList);
             } catch (error) {
                 console.log(error);
             }
         };
-        fetchNewData();
+        fetchFinishedNovels();
     }, [userName]);
 
     const handleBtn = () => {
         navigate('/insertNovelData');
     };
 
-    const handleTitleClick = (novelId) => {
+    const handleEditClick = (novelId) => {
+        navigate(`/chapterListPage/${novelId}`);
+    };
+
+    const handleCompleteClick = (novelId) => {
         navigate(`/detail/${novelId}`);
     };
 
@@ -67,14 +71,14 @@ const MyNovels = () => {
                 <h4>작성 중인 작품</h4>
                 <hr />
                 <Row className={style.cardRow}>
-                    <BestCards bestData={bestData} onClick={handleTitleClick} />
+                    <UnfinishedCards unfinishedNovels={unfinishedNovels} onClick={handleEditClick} />
                 </Row>
             </section>
             <section className={style.section}>
                 <h4>완성된 작품</h4>
                 <hr />
                 <Row className={style.cardRow}>
-                    <NewCard newData={newData} onClick={handleTitleClick} />
+                    <FinishedCards finishedNovels={finishedNovels} onClick={handleCompleteClick} />
                 </Row>
             </section>
         </Container>

@@ -4,17 +4,17 @@ import Button from 'react-bootstrap/Button';
 import NewCardImage from "./NewCardImage";
 
 
-function NewCard(props) {
-  const { newData, onClick } = props;
+function FinishedCards(props) {
+  const { finishedNovels, onClick } = props;
 
 
-  if (!newData) {
-    return <div>신작 소설이 없습니다.</div>;
+  if (!finishedNovels) {
+    return <div>완성된 소설이 없습니다.</div>;
   }
 
   return (
     <>
-      {newData.map((data, index) => (
+      {finishedNovels.map((data, index) => (
         <Card style={{ width: '13rem' }} key={index}>
           <NewCardImage novelId={data.novelId}></NewCardImage>
           <Card.Body>
@@ -29,4 +29,4 @@ function NewCard(props) {
   );
 }
 
-export default NewCard;
+export default FinishedCards;
