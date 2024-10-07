@@ -45,7 +45,7 @@ function BookGrid(props) {
             <div key={index} className={styles.container}>
               <div className={styles.image}>
                 <img
-                    src={imageUrls[data.novelId] || "/path/to/default/image.jpg"} // 대체 이미지
+                    src={imageUrls[data.novelId] || ""} // 대체 이미지
                     alt="Book"
                 />
               </div>
