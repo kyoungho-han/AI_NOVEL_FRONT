@@ -84,7 +84,6 @@ function DetailPage() {
         <div className={style.bookData}>
           <h2>{novelData.title}</h2>
           <h3>작가: {novelData.name}</h3>
-          {/*<p>좋아요: {novelData.love}</p>*/}
           <div>
             <DetailPageList datas={chapterList} onClick={openBookView} />
           </div>
