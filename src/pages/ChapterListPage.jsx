@@ -69,20 +69,19 @@ const ChapterListPage = () => {
         fetchData();
     }, []);
 
-    const handleCloseModalWithImg = (selectedImage) => {
+    const handleCloseModalWithImg = async (selectedImage) => {
         setSelectedImage(selectedImage); // 선택된 이미지 업데이트
-        console.log(selectedImage);
-        const imageResponse = axios.get(selectedImage, {responseType: 'blob'});
-        const blob = new Blob([imageResponse.data]);
-        console.log(blob);
-        const formData = new FormData();
-        formData.append('file', blob, `novel_${novelId}.png`);
         try {
-            console.log(formData.get('file'));
-            axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
+            const response = await fetch(selectedImage);
+            const blob = await response.blob();
+
+            const formData = new FormData();
+            formData.append('file', blob, `novel_${novelId}.png`);
+            formData.append('uuid', selectedImage);
+
             if (selectedImage) {
-                axios.post(`http://localhost:3000/novels/upload/${novelId}`, formData, {
-                    'Content-Type': 'multipart/form-data',
+                await axios.post(`http://localhost:3000/novels/upload/${novelId}`, formData, {
+                    'Content-Type': 'multipart/form-data'
                 });
             }
         } catch (error) {
