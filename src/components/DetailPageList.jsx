@@ -12,8 +12,19 @@ function DetailPageList(props) {
                 datas.map(async (chapter) => {
                     if (chapter) {
                         try {
-                            const response = await axios.get(`http://localhost:3000/chapters/download/${chapter.chapterId}`);
-                            return response.data.string;
+                            const response = await axios.get(`http://localhost:3000/chapters/download/${chapter.chapterId}`, {
+                                responseType: 'arraybuffer' // 바이너리 데이터로 설정
+                            });
+
+                            // arraybuffer 데이터를 Base64로 변환
+                            const base64 = btoa(
+                                new Uint8Array(response.data).reduce(
+                                    (data, byte) => data + String.fromCharCode(byte),
+                                    ''
+                                )
+                            );
+                            const imageUrl = `data:image/png;base64,${base64}`;
+                            return imageUrl;
                         } catch (error) {
                             console.log(error);
                             return ''; // 이미지가 없을 경우 빈 문자열로 반환

@@ -13,21 +13,34 @@ function ChapterList({ novelId, chapterList, novelData })  {
                 chapterList.map(async (chapter) => {
                     if (chapter) {
                         try {
-                            const response = await axios.get(`http://localhost:3000/chapters/download/${chapter.chapterId}`);
-                            return response.data.string;
+                            // axios.get을 await로 처리하여 결과가 반환될 때까지 기다림
+                            const imageResponse = await axios.get(`http://localhost:3000/chapters/download/${novelId}/${chapter.chapterId}`, {
+                                responseType: 'arraybuffer' // 바이너리 데이터로 설정
+                            });
+
+                            // 이미지 데이터를 Base64로 변환
+                            const base64 = btoa(
+                                new Uint8Array(imageResponse.data).reduce(
+                                    (data, byte) => data + String.fromCharCode(byte),
+                                    ''
+                                )
+                            );
+                            const imageUrl = `data:image/png;base64,${base64}`;
+                            return imageUrl;
                         } catch (error) {
                             console.log(error);
-                            return '';
+                            return ''; // 에러가 발생하면 빈 값을 반환
                         }
                     }
-                    return '';
+                    return ''; // chapter가 없으면 빈 값을 반환
                 })
             );
             setChapterImages(images);
         };
 
         fetchChapterImages();
-    }, [chapterList]);
+    }, [chapterList, novelId]);
+
 
     const renderChapterItems = () => {
         const chapterItems = [];

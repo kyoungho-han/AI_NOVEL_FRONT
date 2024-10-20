@@ -12,7 +12,7 @@ const WriteChapter = () => {
     const [textValue, setTextValue] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [prevChapterIdLocal, setPrevChapterIdLocal] = useState(null);
-    const [selectedImage, setSelectedImage] = useState("");
+    const [selectedImage, setSelectedImage] = useState({});
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -33,13 +33,22 @@ const WriteChapter = () => {
                 .catch(error => {
                     console.log(error);
                 });
-            axios.get(`http://localhost:3000/chapters/download/${currentChapterId}`)
-                .then(response => {
-                    setSelectedImage(response.data.string);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+
+            axios.get(`http://localhost:3000/chapters/download/${novelId}/${currentChapterId}`, {
+                responseType: 'arraybuffer' // 바이너리 데이터로 설정
+            }).then(imageResponse => {
+                // 이미지 데이터를 Base64로 변환
+                const base64 = btoa(
+                    new Uint8Array(imageResponse.data).reduce(
+                        (data, byte) => data + String.fromCharCode(byte),
+                        ''
+                    )
+                );
+                const imageUrl = `data:image/png;base64,${base64}`;
+                setSelectedImage(imageUrl); // 이미지 URL 설정
+            }).catch(error => {
+                console.log(error);
+            });
         }
     }, [prevChapterIdLocal]);
 
@@ -52,7 +61,7 @@ const WriteChapter = () => {
         setShowModal(false);
     };
 
-    const handleCompleteWriting = () => {
+    const handleCompleteWriting = async () => {
         if (!selectedImage) {
             alert("챕터 그림을 먼저 선택해주세요.");
             return false;
@@ -66,41 +75,64 @@ const WriteChapter = () => {
         };
 
         if (isNewChapter) {
-            axios.post(`http://localhost:3000/chapters`, data)
-                .then(response => {
-                    const fileData = {
-                        string: selectedImage
-                    };
-                    if (selectedImage) {
-                        axios.post(`http://localhost:3000/chapters/upload/${response.data.chapterId}`, fileData)
-                            .then(response => {
+            try {
+                // 새로운 챕터를 생성하는 POST 요청
+                const response = await axios.post(`http://localhost:3000/chapters`, data);
 
-                            });
-                    }
-                    navigate(`/chapterListPage/${novelId}`);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+                // 이미지 파일을 blob으로 변환
+                const imageResponse = await fetch(selectedImage);
+                const blob = await imageResponse.blob();
+
+                // FormData 생성 및 파일과 uuid 추가
+                const formData = new FormData();
+                formData.append('file', blob, `chapter_${chapterId}.png`);
+                formData.append('uuid', selectedImage);
+                formData.append('novelId', novelId);
+
+                // 챕터 업로드 후 이미지 파일 업로드
+                if (selectedImage) {
+                    await axios.post(`http://localhost:3000/chapters/upload/${response.data.chapterId}`, formData, {
+                        'Content-Type': 'multipart/form-data'
+                    });
+                }
+
+                // 페이지 이동
+                navigate(`/chapterListPage/${novelId}`);
+            } catch (error) {
+                console.log(error);
+            }
         } else {
-            axios.put(`http://localhost:3000/chapters/${chapterId}`, data)
-                .then(response => {
-                    const fileData = {
-                        string: selectedImage
-                    };
-                    if (selectedImage) {
-                        axios.put(`http://localhost:3000/chapters/updateFile/${chapterId}`, fileData)
-                            .then(response => {
+            try {
+                // 기존 챕터 수정 요청 (PUT)
+                await axios.put(`http://localhost:3000/chapters/${chapterId}`, data);
 
-                            });
-                    }
-                    navigate(`/chapterListPage/${novelId}`);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+                // 이미지 파일을 blob으로 변환
+                const imageResponse = await fetch(selectedImage);
+                const blob = await imageResponse.blob();
+
+                // FormData 생성 및 파일과 uuid 추가
+                const formData = new FormData();
+                formData.append('file', blob, `chapter_${chapterId}.png`);
+                formData.append('uuid', selectedImage);
+                formData.append('novelId', novelId);
+
+                // 챕터 수정 후 이미지 파일 업로드
+                if (selectedImage) {
+                    await axios.put(`http://localhost:3000/chapters/updateFile/${chapterId}`, formData, novelId, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+                }
+
+                // 페이지 이동
+                navigate(`/chapterListPage/${novelId}`);
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
+
 
     const handleChangeTitle = (event) => {
         const newTitle1 = event.target.value;

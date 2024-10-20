@@ -13,8 +13,20 @@ function BookGrid(props) {
       const newImageUrls = {};
       for (let data of datas) {
         try {
-          const response = await axios.get(`http://localhost:3000/novels/download/${data.novelId}`, {});
-          newImageUrls[data.novelId] = response.data.string;
+          const response = await axios.get(`http://localhost:3000/novels/download/${data.novelId}`, {
+            responseType: 'arraybuffer' // 바이너리 데이터로 응답받기
+          });
+
+          // base64로 인코딩
+          const base64 = btoa(
+              new Uint8Array(response.data).reduce(
+                  (data, byte) => data + String.fromCharCode(byte),
+                  ''
+              )
+          );
+
+          // data URL 형식으로 이미지 URL 설정
+          newImageUrls[data.novelId] = `data:image/png;base64,${base64}`;
         } catch (error) {
           console.log(error);
           newImageUrls[data.novelId] = "/path/to/default/image.jpg"; // 대체 이미지 설정
@@ -29,6 +41,7 @@ function BookGrid(props) {
       fetchImages();
     }
   }, [datas, currentPage]); // datas 추가
+
 
   // datas가 비어 있으면 표시할 메시지
   if (!datas || datas.length === 0) {

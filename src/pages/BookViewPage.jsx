@@ -35,15 +35,31 @@ function BookViewPage() {
   }, [chapterId, accessToken.accessToken]);
 
   useEffect(() => {
-      axios.get(`http://localhost:3000/chapters/download/${chapterId}`)
-          .then(response => {
-            setImage(response.data.string);
-          })
-          .catch(error => {
-            console.log(error);
-          });
+    const fetchImage = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/chapters/download/${chapterId}`, {
+          responseType: 'arraybuffer' // 이미지 데이터를 바이너리 형식으로 가져오기
+        });
 
-  }, []);
+        // arraybuffer 데이터를 Base64로 변환
+        const base64 = btoa(
+            new Uint8Array(response.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ''
+            )
+        );
+
+        // Base64로 변환된 이미지를 설정
+        const imageUrl = `data:image/png;base64,${base64}`;
+        setImage(imageUrl); // 이미지 URL을 설정
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchImage(); // 비동기 함수 호출
+  }, [chapterId]);
+
 
   const goToChapterList = () => {
     navigate(`/detail/${novelId}`); // 목록 페이지로 이동

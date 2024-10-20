@@ -87,7 +87,7 @@ const CoverModals = ({ show, onClose, onCloseWithImg }) => {
                         />
                     ))}
                     <br /><br />
-                    <div className='notion'>↑↑↑ 위의 그림 중에 하나를 클릭해주세요</div>
+                    <div className='notion'>↑↑↑ 위의 그림을 클릭해주세요</div>
                   </div>
               ) : (
                   <></>

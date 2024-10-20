@@ -8,29 +8,28 @@ function NewCardImage(props){
   const {novelId} = props;
   const [imageUrl, setImageUrl] = useState({})
 
-
-
   useEffect(() => {
     const ChapterList = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/novels/download/${novelId}`);
+        const response = await axios.get(`http://localhost:3000/novels/download/${novelId}`, {
+          responseType: 'arraybuffer' // 바이너리 데이터로 응답받기
+        });
 
-        // 응답 데이터에서 문자열이 없거나 비어있는 경우 처리
-        if (response.data.string) {
-          setImageUrl(response.data.string);
-        } else {
-          // 그림이 없을 경우에 대한 처리 (예: 기본 이미지 URL 설정)
-          setImageUrl(null); // null 또는 빈 문자열로 설정
-        }
+        const base64 = btoa(
+            new Uint8Array(response.data)
+                .reduce((data, byte) => data + String.fromCharCode(byte), '')
+        );
+        const imageUrl = `data:image/png;base64,${base64}`;
+        setImageUrl(imageUrl); // 이미지 URL을 설정
       } catch (error) {
-
+        console.error("이미지 불러오기 실패:", error);
+        setImageUrl("/path/to/default/image.jpg"); // 오류 발생 시 기본 이미지 설정
       }
     };
 
     ChapterList();
-  }, [novelId]); // novelId가 변경될 때마다 useEffect가 실행됨
+  }, [novelId]);
 
- 
   return(
     <img src={imageUrl} alt="사진없음" />
   )

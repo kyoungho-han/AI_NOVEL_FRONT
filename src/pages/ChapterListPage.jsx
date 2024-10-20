@@ -16,7 +16,6 @@ const ChapterListPage = () => {
     const [showModal, setShowModal] = useState(false);
     const [chapterData, setChapterData] = useState([]);
     const [selectedImage, setSelectedImage] = useState("");
-    const [imageData, setImageData] = useState(null);
     const [novelData, setNovelData] = useState({});
     const { novelId } = useParams();
     const navigate = useNavigate();
@@ -58,16 +57,27 @@ const ChapterListPage = () => {
         const fetchData = async () => {
             try {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
-                const response = await axios.get(`http://localhost:3000/novels/drawing/${novelId}`);
-                if (response.data.fileName) {
-                    setSelectedImage(response.data.fileName);
-                }
+                const response = await axios.get(`http://localhost:3000/novels/download/${novelId}`, {
+                    responseType: 'arraybuffer', // 바이너리 데이터로 응답받기
+                });
+
+                // base64로 인코딩
+                const base64 = btoa(
+                    new Uint8Array(response.data).reduce(
+                        (data, byte) => data + String.fromCharCode(byte),
+                        ''
+                    )
+                );
+
+                // data URL 형식으로 이미지 설정
+                setSelectedImage(`data:image/png;base64,${base64}`);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchData();
-    }, []);
+    }, [novelId, accessToken]);
+
 
     const handleCloseModalWithImg = async (selectedImage) => {
         setSelectedImage(selectedImage); // 선택된 이미지 업데이트
